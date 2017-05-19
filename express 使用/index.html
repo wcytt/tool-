@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax todo</title>
+</head>
+<body>
+    <div>前端用 ajax 发送 request ，后端用 express 来处理并返回 response</div>
+    <img src="/images/doge.gif" alt="">
+</body>
+<script>
+    var ajax = function(method, path, data, callback) {
+        var r = new XMLHttpRequest()
+        r.open(method, path, true)
+        r.setRequestHeader('Content-Type', 'application/json')
+        r.onreadystatechange = function() {
+            if(r.readyState === 4) {
+                callback(r.response)
+            }
+        }
+        r.send(data)
+    }
+
+    var apiTodoAll = function(callback) {
+        var method = 'GET'
+        var path = '/todo/all'
+        var data = ''
+        ajax(method, path, data, callback)
+    }
+
+    var apiTodoAdd = function(task, callback) {
+        var method = 'POST'
+        var path = '/todo/add'
+        var data = {
+            'task': task,
+        }
+        data = JSON.stringify(data)
+        console.log('!!!apitodoadd', data)
+        ajax(method, path, data, callback)
+    }
+
+    var apiTodoUpdate = function(id, task, callback) {
+        var method = 'POST'
+        var path = '/todo/update/' + id
+        var data = {
+            'id': id,
+            'task': task,
+        }
+        data = JSON.stringify(data)
+        ajax(method, path, data, callback)
+    }
+
+    apiTodoUpdate(2, 'update 后的数据', function(response) {
+        console.log('todo update 成功')
+    })
+//
+//    apiTodoAdd('add 后的数据', function(response) {
+//        console.log('todo add 成功', response)
+//    })
+
+    apiTodoAll(function(response) {
+        console.log('todo all', response)
+    })
+</script>
+</html>

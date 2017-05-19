@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "fs": "^0.0.1-security",
+    "sync-request": "^4.0.3"
+  }
+}
